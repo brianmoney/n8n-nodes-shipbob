@@ -1,21 +1,23 @@
 // Imports for n8n
-import { IExecuteFunctions } from 'n8n-core';
-import { INodeExecutionData, INodeProperties, INodeType, INodeTypeDescription, NodeApiError } from 'n8n-workflow';
+// Updated imports for n8n
+import { IExecuteFunctions } from 'n8n-workflow';
+import { INodeExecutionData, INodeType, INodeTypeDescription, NodeApiError, NodeConnectionType } from 'n8n-workflow';
 import axios from 'axios';
+
 
 export class ShipBob implements INodeType {
     description: INodeTypeDescription = {
         displayName: 'ShipBob',
         name: 'shipBob',
-        icon: 'file:shipbob.png',
+        icon: 'file:shipbob.svg',
         group: ['transform'],
         version: 1,
         description: 'Consume ShipBob API',
         defaults: {
             name: 'ShipBob',
         },
-        inputs: ['main'],
-        outputs: ['main'],
+				inputs: [NodeConnectionType.Main],  // Use NodeConnectionType instead of string
+				outputs: [NodeConnectionType.Main], // Use NodeConnectionType instead of string
         credentials: [
             {
                 name: 'shipBobApi',
@@ -87,7 +89,6 @@ export class ShipBob implements INodeType {
                 default: 'getAll',
                 description: 'The operation to perform.',
             },
-            // Additional properties for operations (e.g., ID for get, etc.)
             {
                 displayName: 'ID',
                 name: 'id',
@@ -164,14 +165,18 @@ export class ShipBob implements INodeType {
                         // Implement similar logic for returns
                         break;
                 }
-                returnData.push({ json: responseData.data });
+                if (responseData && responseData.data) {
+                    returnData.push({ json: responseData.data });
+                } else {
+                    throw new NodeApiError(this.getNode(), {}, { message: 'Empty response from ShipBob API' });
+                }
             } catch (error) {
-                throw new NodeApiErrorError(`ShipBob API request failed: ${error.message}`);
+                throw new NodeApiError(this.getNode(), {}, {
+                    message: `ShipBob API request failed: ${error.message}`,
+                });
             }
         }
 
         return this.prepareOutputData(returnData);
     }
 }
-
-// Note: Ensure to properly handle response formats and error checking for each API endpoint.

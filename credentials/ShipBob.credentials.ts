@@ -1,7 +1,6 @@
-// Imports for n8n credentials
 import { ICredentialType, INodeProperties } from 'n8n-workflow';
 
-export class ShipBobApi implements ICredentialType {
+export class ShipBob implements ICredentialType {
     name = 'shipBobApi';
     displayName = 'ShipBob API';
     documentationUrl = 'shipBob';
@@ -17,4 +16,5 @@ export class ShipBobApi implements ICredentialType {
     ];
 }
 
-// Note: The Personal Access Token (PAT) is used for authentication in all API requests.
+export default ShipBob; // Exporting the default class to simplify the import/export process.
+

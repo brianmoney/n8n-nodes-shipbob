@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "description": "n8n node to call ShipBob API",
   "keywords": [
-    "n8n-community-node-package", "shipbob"
+    "n8n-community-node-package",
+    "shipbob"
   ],
+  "type": "commonjs",
   "license": "MIT",
   "homepage": "https://aspereo.com",
   "author": {
@@ -20,7 +22,7 @@
     "pnpm": ">=9.1"
   },
   "packageManager": "pnpm@9.1.4",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "tsc && gulp build:icons",
@@ -39,7 +41,7 @@
       "dist/credentials/ShipBob.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/ExampleNode/ShipBob.node.js"
+      "dist/nodes/ShipBob/ShipBob.node.js"
     ]
   },
   "devDependencies": {
@@ -47,11 +49,15 @@
     "eslint": "^8.56.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.1",
     "gulp": "^4.0.2",
-    "n8n-workflow": "*",
+    "n8n-workflow": "^1.66.0",
+    "n8n-core": "^1.66.0",
     "prettier": "^3.3.2",
     "typescript": "^5.5.3"
   },
   "peerDependencies": {
-    "n8n-workflow": "*"
+    "n8n-workflow": "^1.66.0"
+  },
+  "dependencies": {
+    "n8n-core": "^1.14.1"
   }
 }
